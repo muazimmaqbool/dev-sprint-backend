@@ -1,3 +1,6 @@
+// Using ES Modules (import/export) because "type": "module" is set in package.json
+// This replaces the older CommonJS require() syntax
+
 import express from "express"
 import cors from "cors"
 import "dotenv/config"
