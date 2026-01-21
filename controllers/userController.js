@@ -23,13 +23,16 @@ export const register = async (req, res) => {
     }
 
     //checking it email already exists or not
-    const emailExists = await User.findOne({ email: email });
+    //const emailExists = await User.findOne({ email: email });
     //or
-    // const emailExists=await User.findOne({email}).lean()
+    const emailExists=await User.findOne({email}).lean()
     /*
     user.findOne({email}) finds one user with given email and '.lean()' makes MongoDB return a plain JS object, not a full Mongoose document.
     Why use .lean() because without .lean() it returns heavy object which also hase methods and with .lean() it returns simple js object which is faster
     in short:-> findOne().lean() returns a lightweight, read-only object
+    Note: { email: email } // long form
+          { email }        // shorthand
+        in User.findOne method
     */
 
     if (emailExists) {
