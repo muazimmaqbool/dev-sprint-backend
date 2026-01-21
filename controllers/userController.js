@@ -4,6 +4,7 @@ import "dotenv/config";
 import validator from "validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { generateToken } from "../jwt";
 
 const tokenExpiresIn = process.env.TOKEN_EXPIRES_IN;
 const jwtSecretKey = process.env.JWT_SECRET_KEY;
@@ -42,10 +43,7 @@ export const register = async (req, res) => {
     });
     await user.save();
 
-    if (!jwtSecretKey) throw new Error("Jwt secret key is missing");
-    const token = jwt.sign({ id: newId.toString() }, jwtSecretKey, {
-      expiresIn: tokenExpiresIn,
-    });
+    const token = generateToken(payLoad);
 
     return res.status(201).json({
       message: "User signup successfully...!",

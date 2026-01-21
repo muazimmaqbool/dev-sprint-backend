@@ -6,6 +6,7 @@ const jwtSecretKey = process.env.JWT_SECRET_KEY;
 
 //middleware to generate jwt token
 export const generateToken=(payload)=>{
+     if (!jwtSecretKey) throw new Error("Jwt secret key is missing");
     return jwt.sign(payload,jwtSecretKey,{expiresIn:tokenExpiresIn})
 }
 
