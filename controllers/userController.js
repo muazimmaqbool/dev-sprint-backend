@@ -29,11 +29,17 @@ export const register = async (req, res) => {
     /*
     user.findOne({email}) finds one user with given email and '.lean()' makes MongoDB return a plain JS object, not a full Mongoose document.
     Why use .lean() because without .lean() it returns heavy object which also hase methods and with .lean() it returns simple js object which is faster
+    in short:-> findOne().lean() returns a lightweight, read-only object
     */
 
     if (emailExists) {
       return res.status(409).json({ message: "Email already exists" });
     }
+    /*
+    Manually creates a new MongoDB ObjectId.
+    Same type as MongoDB’s default _id.
+    Useful for: linking to other records, sending the ID to another service and creating related documents in advance
+    */
     const newId = new mongoose.Types.ObjectId();
     const hashedPassword = await bcrypt.hash(password, 10);
 
