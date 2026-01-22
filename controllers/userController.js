@@ -3,11 +3,11 @@ import User from "../models/userModel";
 import "dotenv/config";
 import validator from "validator";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+// import jwt from "jsonwebtoken";
 import { generateToken } from "../jwt";
 
-const tokenExpiresIn = process.env.TOKEN_EXPIRES_IN;
-const jwtSecretKey = process.env.JWT_SECRET_KEY;
+// const tokenExpiresIn = process.env.TOKEN_EXPIRES_IN;
+// const jwtSecretKey = process.env.JWT_SECRET_KEY;
 
 //Registering new user
 export const register = async (req, res) => {
