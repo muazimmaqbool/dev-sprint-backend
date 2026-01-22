@@ -25,7 +25,7 @@ export const register = async (req, res) => {
     //checking it email already exists or not
     //const emailExists = await User.findOne({ email: email });
     //or
-    const emailExists=await User.findOne({email}).lean()
+    const emailExists = await User.findOne({ email }).lean();
     /*
     user.findOne({email}) finds one user with given email and '.lean()' makes MongoDB return a plain JS object, not a full Mongoose document.
     Why use .lean() because without .lean() it returns heavy object which also hase methods and with .lean() it returns simple js object which is faster
@@ -56,13 +56,41 @@ export const register = async (req, res) => {
     });
     await user.save();
 
-    const token = generateToken(payLoad);
+    const token = generateToken({id:newId.toString()});
 
     return res.status(201).json({
       message: "User signup successfully...!",
       token,
       user: { id: user._id.toString(), name: user.name, email: user.email },
     });
+  } catch (error) {
+    console.error("Error during saving user:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+//login function
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Email and password missing...!" });
+    }
+    //if both fields are provided
+    const user = await User.findOne({ email: email });
+    //if user is not found
+    if (!user) return res.status(409).json({ message: "Invalid email provided" });
+
+    //user is present now comparing password
+    const isPasswordMatch=await bcrypt.compare(password,user.password)
+
+    //if wrong password is provided
+    if(!isPasswordMatch) return res.status(400).json({message:"Invalid password provided"})
+
+    const token=generateToken({id:user._id.toString()})
+    return res.status(201).json({message:"Login successfully...",token})
   } catch (error) {
     console.error("Error during saving user:", err);
     res.status(500).json({ error: "Internal server error" });
