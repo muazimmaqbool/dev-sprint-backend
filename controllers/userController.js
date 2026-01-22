@@ -92,7 +92,7 @@ export const login = async (req, res) => {
     const token=generateToken({id:user._id.toString()})
     return res.status(201).json({message:"Login successfully...",token})
   } catch (error) {
-    console.error("Error during saving user:", err);
+    console.error("Error during login:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 };
