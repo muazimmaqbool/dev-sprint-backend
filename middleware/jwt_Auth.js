@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import "dotenv/config";
-import User from "../models/userModel";
+import User from "../models/userModel.js";
 
 const tokenExpiresIn = process.env.TOKEN_EXPIRES_IN;
 const jwtSecretKey = process.env.JWT_SECRET_KEY;

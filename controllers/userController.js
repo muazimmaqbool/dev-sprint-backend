@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import User from "../models/userModel";
+import User from "../models/userModel.js";
 import "dotenv/config";
 import validator from "validator";
 import bcrypt from "bcryptjs";
 // import jwt from "jsonwebtoken";
-import { generateToken } from "../middleware/jwt_Auth";
+import { generateToken } from "../middleware/jwt_Auth.js";
 
 // const tokenExpiresIn = process.env.TOKEN_EXPIRES_IN;
 // const jwtSecretKey = process.env.JWT_SECRET_KEY;

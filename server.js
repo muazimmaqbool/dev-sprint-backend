@@ -5,6 +5,7 @@ import express from "express"
 import cors from "cors"
 import "dotenv/config"
 import { connectDB } from "./config/db.js"
+import userRouter from "./routes/userRoutes.js"
 
 const app=express()
 const PORT=process.env.PORT
@@ -19,6 +20,7 @@ app.use(express.urlencoded({extended:true}))
 connectDB()
 
 //-> routes:
+// app.use('/api/auth',userRouter)
 
 //just for testing: http://localhost:3000/
 app.get("/",(req,res)=>{
