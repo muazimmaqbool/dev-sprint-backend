@@ -4,7 +4,7 @@ import "dotenv/config";
 import validator from "validator";
 import bcrypt from "bcryptjs";
 // import jwt from "jsonwebtoken";
-import { generateToken } from "../jwt";
+import { generateToken } from "../middleware/jwt_Auth";
 
 // const tokenExpiresIn = process.env.TOKEN_EXPIRES_IN;
 // const jwtSecretKey = process.env.JWT_SECRET_KEY;
