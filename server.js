@@ -20,7 +20,7 @@ app.use(express.urlencoded({extended:true}))
 connectDB()
 
 //-> routes:
-// app.use('/api/auth',userRouter)
+app.use('/user',userRouter)
 
 //just for testing: http://localhost:3000/
 app.get("/",(req,res)=>{
