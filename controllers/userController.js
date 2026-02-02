@@ -63,6 +63,7 @@ export const register = async (req, res) => {
       token,
       user: { id: user._id.toString(), name: user.name, email: user.email },
     });
+    //when api hits success, it will return jwt toke, and user details like name, email and id
   } catch (error) {
     console.error("Error during saving user:", err);
     res.status(500).json({ error: "Internal server error" });
