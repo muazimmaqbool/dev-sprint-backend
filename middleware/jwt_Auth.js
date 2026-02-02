@@ -31,6 +31,8 @@ export const jwtAuthMiddleware = async (req, res, next) => {
 
     //geting user by id which is inside payload
     const user = await User.findById(payload.id).select("-password");
+    //Excludes the password field from the result. (- means remove this field.)
+    
     if (!user) {
       return res.status(401).json({ message: "User not found!" });
     }
