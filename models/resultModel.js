@@ -5,8 +5,10 @@ const performanceEnum = ["Excellent", "Good", "Average", "Needs Work"];
 const resultSchema = new mongoose.Schema(
   {
     user: {
-      type: mongoose.Schema.ObjectId,
-      ref: "userSchema",
+      type: mongoose.Schema.ObjectId, // stores the ID of another mongodb document here its userSchema
+      //i.e each result belongs to one user
+      ref: "userSchema", //This ObjectId points to the User collection
+      //here type and ref is a reference relationship (like foreign key).
       required: true,
     },
     title: {
@@ -69,6 +71,8 @@ const resultSchema = new mongoose.Schema(
   },
 );
 
+//Note: resultSchema.pre(...) : means before saving this document, run this function
+
 //calculating result percentage and wrong answers
 resultSchema.pre('save',function(next){
     const total=Number(this.totalQuestions) || 0;
@@ -85,7 +89,7 @@ resultSchema.pre('save',function(next){
         this.wrong=Math.max(0,total - correct)
     }
 
-    next()
+    next() // Tells Mongoose: I’m done, now continue saving.
 })
 
 const Result=mongoose.model('Result',resultSchema)
