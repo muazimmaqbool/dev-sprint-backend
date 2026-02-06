@@ -4,7 +4,7 @@ export async function createResult(req, res) {
   try {
     //it will come via token
     //check jwt.js file and see what token is returning after verifying its req.user=user
-    if (req.user || req.user.id) {
+    if (!req.user || !req.user.id) {
       return res.status(401).json({ message: "Not authorized" });
     }
 
@@ -41,19 +41,36 @@ export async function createResult(req, res) {
 }
 
 //used to list the result/ fetching results
+//This function fetches all quiz results of the logged-in user, with optional filtering by technology
 export const listResult = async (req, res) => {
   try {
     //it will come via token
     //check jwt.js file and see what token is returning after verifying its req.user=user
-    if (req.user || req.user.id) {
+    if (!req.user || !req.user.id) {
       return res.status(401).json({ message: "Not authorized" });
     }
-    const {techonology}=req.query;
+    // This reads from URL like: api/results?technology=react, so technology === "react"
+    const {technology}=req.query;
+
+    //Only fetch results belonging to this user
     const query={user:req.user.id};
-    if(techonology && techonology.toLowerCase()!=="all"){
-        query.techonology=techonology
+
+    if(technology && technology.toLowerCase()!=="all"){
+        //If user requests: ?technology=react
+        //Then query becomes:
+        // {
+        // user: "65ab12...",
+        // technology: "react"
+        // }
+        query.technology=technology
     }
+   // If user requests: ?technology=all, then no filter is applied, returns all results
+
     const items=await Result.find(query).sort({createdAt:-1}).lean()
+    //find(query): Get matching results
+    //sort({createdAt:-1}): Newest first
+    //.lean(): Return plain JS objects (faster)
+
     return res.status(201).json({result:items})
   } catch (error) {
     console.error("Error while fetching result:", err);
