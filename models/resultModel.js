@@ -9,7 +9,7 @@ const resultSchema = new mongoose.Schema(
       //i.e each result belongs to one user
       ref: "userSchema", //This ObjectId points to the User collection
       //here type and ref is a reference relationship (like foreign key).
-      required: true,
+      required: false,
     },
     title: {
       type: String,
