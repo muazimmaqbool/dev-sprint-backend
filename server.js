@@ -6,6 +6,7 @@ import cors from "cors"
 import "dotenv/config"
 import { connectDB } from "./config/db.js"
 import userRouter from "./routes/userRoutes.js"
+import resultRoute from "./routes/resultRoute.js"
 
 const app=express()
 const PORT=process.env.PORT
@@ -21,6 +22,7 @@ connectDB()
 
 //-> routes:
 app.use('/user',userRouter)
+app.use('/results',resultRoute)
 
 //just for testing: http://localhost:3000/
 app.get("/",(req,res)=>{
