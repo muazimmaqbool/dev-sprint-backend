@@ -30,7 +30,8 @@ const resultSchema = new mongoose.Schema(
         "java",
         "python",
         "cpp",
-      ],
+        "bootstrap"
+      ]
     },
     level: {
       type: String,
